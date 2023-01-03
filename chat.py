@@ -3,6 +3,7 @@ import json
 import torch
 from model_file import NeuralNet
 from nltk_utils import bag_of_words, tokenize
+import questions_db
 
 def chat_response(sentence):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -26,22 +27,23 @@ def chat_response(sentence):
 
     bot_name = "PizzaBot"
 
-    while True:
-        sentence = tokenize(sentence)
-        x = bag_of_words(sentence, all_words)
-        x = x.reshape(1, x.shape[0])
-        x = torch.from_numpy(x).to(device)
+    
+    user_msg = tokenize(sentence)
+    x = bag_of_words(user_msg, all_words)
+    x = x.reshape(1, x.shape[0])
+    x = torch.from_numpy(x).to(device)
 
-        output = model(x)
-        _, predicted = torch.max(output, dim=1)
-        tag = tags[predicted.item()]
+    output = model(x)
+    _, predicted = torch.max(output, dim=1)
+    tag = tags[predicted.item()]
 
-        probs = torch.softmax(output, dim=1)
-        prob = probs[0][predicted.item()]
-        
-        if prob.item() > 0.75:
-            for intent in intents['intents']:
-                if tag == intent['tag']:
-                    return (f"{bot_name}: {random.choice(intent['responses'])}")
-        else:
-            return (f"{bot_name}: I do not understand... ")
+    probs = torch.softmax(output, dim=1)
+    prob = probs[0][predicted.item()]
+    
+    if prob.item() > 0.75:
+        for intent in intents['intents']:
+            if tag == intent['tag']:
+                return (f"{bot_name}: {random.choice(intent['responses'])}")
+    else:
+        questions_db.insert_into(sentence)
+        return (f"{bot_name}: I do not understand... ")

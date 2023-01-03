@@ -1,6 +1,6 @@
 {"intents": [
     {"tag": "greetings",
-     "patterns": ["hello", "hey", "good day", "greetings", "what's up?", "how is it going?"],
+     "patterns": ["hello", "hey", "good day", "greetings", "what's up?", "how is it going?", "hi"],
      "responses": ["Hello!", "Hey!", "What can Ido for you?"]
     },
     {"tag": "goodbye",
@@ -16,8 +16,8 @@
      "responses": ["You can call me PizzaBot!", "I'm PizzaBot", "I'm PizzaBot, and I will help you to order pizzas!"]
     },
     {"tag": "shop",
-     "patterns": ["Id like to buy something", "What are yout products?", "What do you recomend?", "What are you selling?"],
-     "responses": ["We only sell pizzas, pops, alcohol and esfihas. Do you want to see the menu?"]
+     "patterns": ["Id like to buy something", "What are yout products?", "What do you recomend?", "What are you selling?", "i want to buy pizza", "could you send the menu?", "please, send me the menu", "pizza tastes", "Can I see the menu", "could I see the menu", "menu", "prices"],
+     "responses": ["We only sell pizzas, pops, alcohol and esfihas. You can see the menu here: https://instadelivery.com.br/augustopizzariaeesfiharia"]
     },
     {"tag": "hours",
      "patterns": ["When are you guys open", "What are your hours", "hours of operation"],
